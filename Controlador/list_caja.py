@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Aug 17 15:23:26 2024
-
-@author: Carlos Luco Montofré
-"""
-
 class ListControllerCajas:
     
     def __init__(self, model, view):

@@ -1,40 +1,36 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Oct  8 10:20:31 2024
-
-@author: Carlos Luco Montofré
-"""
-
+from .conectorBD import ConectorBD
 
 class Monedas_DAO:
 
     def __init__(self, conectorBD) -> None:
-
         self.conectorBD = conectorBD
 
-
     def recuperar_listaMonedas(self):
+        # Activar la conexión a la base de datos
         estado = self.conectorBD.activarConexion()
 
-        if estado == 66:
+        if estado == 66:  # Error al conectar
             del self.conectorBD
             return estado, None
         
-        sql = "select cod_moneda, nom_moneda, tipo_cambio from monedas"
+        # Consulta para recuperar toda la tabla "moneda"
+        sql = "SELECT id, nombre, simbolo FROM moneda"
         estado, datos = self.conectorBD.ejecutarSelectAll(sql)
 
+        # Crear diccionario para almacenar los datos
         listaMonedas_DTO = {}
 
-        if estado == 0:
+        if estado == 0:  # Si la consulta fue exitosa
+            for i in range(len(datos)):
+                registro = {
+                    "codigo": datos[i][0], 
+                    "nombre": datos[i][1], 
+                    "simbolo": datos[i][2]
+                }
+                listaMonedas_DTO[i] = registro
 
-            for i in range(0, len(datos)):
-                registro = {"codigo": datos[i][0], "nombre": datos[i][1], "tipo": datos[i][2]}
-                listaMonedas_DTO[i]= registro
-
-
+        # Cerrar la conexión
         self.conectorBD.desactivarConexion()
-
         del self.conectorBD
 
         return estado, listaMonedas_DTO
-

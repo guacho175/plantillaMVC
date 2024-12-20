@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Aug 17 14:39:06 2024
-
-@author: Carlos Luco Montofré
-"""
-
 from tkinter import Frame, Label, Button, Listbox, END
 
 class ListViewCajas(Frame):

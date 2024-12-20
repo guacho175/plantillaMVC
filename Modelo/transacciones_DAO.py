@@ -1,6 +1,6 @@
 from .conectorBD import ConectorBD
 
-class Cajas_DAO:
+class Transacciones_DAO:
     
     def __init__(self):
         # Configura la conexión a la base de datos
@@ -11,25 +11,33 @@ class Cajas_DAO:
             basedatosdb='acme'
         )
     
-    
     def leer_datos(self):
+        # Activar la conexión
         self.conector.activarConexion()
-        sql = "SELECT * FROM caja WHERE estado=1"
+
+        # Consulta para obtener todos los registros de transacciones
+        sql = "SELECT id, cantidad, monto_total, moneda_id FROM transaccion"
         estado, datos = self.conector.ejecutarSelectAll(sql)
 
-        listaCajas_DTO = {}
+        # Inicializar el diccionario de datos
+        listaTransacciones_DTO = {}
 
         if estado == 0:
+            for i in range(len(datos)):
+                registro = {
+                    "id": datos[i][0], 
+                    "cantidad": datos[i][1], 
+                    "monto_total": datos[i][2], 
+                    "moneda_id": datos[i][3]
+                }
+                listaTransacciones_DTO[i] = registro
 
-            for i in range(0, len(datos)):
-                registro = {"id": datos[i][0], "nombre": datos[i][1], "estado": datos[i][2], "disponibilidad_pesos": datos[i][3]}
-                listaCajas_DTO[i]= registro
-
+        # Desactivar la conexión
         print("----------------------------------------------------------------------")
         print(estado)
-        print(listaCajas_DTO)
+        print(listaTransacciones_DTO)
         print("----------------------------------------------------------------------")
         self.conector.desactivarConexion()
 
         print("Datos leídos exitosamente.")
-        return listaCajas_DTO
+        return listaTransacciones_DTO

@@ -38,12 +38,10 @@ class Controller:
         self.model.gestor_datos.add_event_listener(
             "lista_datos", self.datos_list_listener)
             
-        self.model.gestor_cajas.add_event_listener(
-            "lista_cajas", self.cajas_list_listener)
-        
         self.model.gestor_transacciones.add_event_listener(
-            "moneda_mas_vendida", self.transacciones_list_listener)
+            "lista_transacciones", self.transacciones_list_listener)
         
+
         self.model.gestor_datos.add_event_listener(
             "retorno_menu_registro", self.datos_retorno_register_listener)
 
@@ -70,13 +68,11 @@ class Controller:
     def datos_retorno_register_listener(self, data):
         self.view.switch("home")
 
+    #-------------------------- Galindez estuvo por aca--------------------------
     def transacciones_list_listener(self, data):
-        if not data:
-            print("No se encontraron datos.")
-            self.view.frames["listTransacciones"].listar_datos(None)
-        else:
-            print(f"Datos de la moneda más vendida: {data}")
-            self.view.frames["listTransacciones"].listar_datos(data)
+        print("Evento list_transacciones recibida")
+        lista_DTO = self.model.gestor_transacciones.desplegar_datos()
+        self.list_controller_transacciones.update_view(lista_DTO)
         self.view.switch("listTransacciones")
 
 

@@ -8,7 +8,7 @@ Created on Sat Aug  3 22:53:53 2024
 from .gestor_usuarios import Gestor_Usuarios
 from .gestor_datos import Gestor_Datos
 from .gestor_cajas import Gestor_Cajas
-from .gestor_transaccion import Gestor_Transacciones
+from .gestor_transacciones import Gestor_Transacciones
 
 
 class Model:
@@ -17,3 +17,4 @@ class Model:
         self.gestor_datos = Gestor_Datos()
         self.gestor_cajas = Gestor_Cajas()
         self.gestor_transacciones = Gestor_Transacciones()
+

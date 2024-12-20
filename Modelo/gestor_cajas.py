@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Aug  6 20:15:46 2024
-
-@author: Carlos Luco Montofré
-"""
-
 from .event_handler import ObservableModel
 from .cajas_DAO import Cajas_DAO
 

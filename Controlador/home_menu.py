@@ -37,11 +37,9 @@ class HomeController:
         self.model.gestor_cajas.recuperar_datos()
 
     def listsTransacciones(self):
-        # Obtén la fecha actual
-        fecha = datetime.datetime.now().strftime("%Y-%m-%d")
-        
-        print(f"Consultando la moneda más vendida para la fecha: {fecha}")
-        self.model.gestor_transacciones.recuperar_datos(fecha)
+        print("controlador/home_menu.py -> pide recuperar datos")
+        self.model.gestor_transacciones.recuperar_datos()
+
 
     def logout(self):
         self.model.gestor_usuarios.logout()
