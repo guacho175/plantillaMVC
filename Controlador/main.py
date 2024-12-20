@@ -6,6 +6,7 @@ Created on Sat Aug  3 23:02:35 2024
 """
 
 from .home_menu import HomeController
+from .list_transacciones import ListControllerTransacciones
 from .list_datos import ListController
 from .list_caja import ListControllerCajas
 from .signin_usuario import SignInController
@@ -23,7 +24,7 @@ class Controller:
         self.register_controller   = RegisterController(model, view)
         self.list_controller       = ListController(model, view)
         self.list_controller_cajas = ListControllerCajas(model, view)
-        
+        self.list_controller_transacciones = ListControllerTransacciones(model, view)
 
         self.model.gestor_usuarios.add_event_listener(
             "ingreso_sistema", self.autentificacion_signin_listener)
@@ -39,10 +40,12 @@ class Controller:
             
         self.model.gestor_cajas.add_event_listener(
             "lista_cajas", self.cajas_list_listener)
-              
+        
+        self.model.gestor_transacciones.add_event_listener(
+            "moneda_mas_vendida", self.transacciones_list_listener)
+        
         self.model.gestor_datos.add_event_listener(
             "retorno_menu_registro", self.datos_retorno_register_listener)
-        
 
     def autentificacion_signin_listener(self, data):
         self.home_controller.update_view()
@@ -58,19 +61,24 @@ class Controller:
         self.list_controller.update_view()
         self.view.switch("list")
 
-
-
     def cajas_list_listener(self, data):
         print("Evento list_cajas recibido")
         lista_DTO = self.model.gestor_cajas.desplegar_datos()
-
         self.list_controller_cajas.update_view(lista_DTO)
         self.view.switch("listCajas")
 
-
-
     def datos_retorno_register_listener(self, data):
         self.view.switch("home")
+
+    def transacciones_list_listener(self, data):
+        if not data:
+            print("No se encontraron datos.")
+            self.view.frames["listTransacciones"].listar_datos(None)
+        else:
+            print(f"Datos de la moneda más vendida: {data}")
+            self.view.frames["listTransacciones"].listar_datos(data)
+        self.view.switch("listTransacciones")
+
 
     def start(self):
         self.view.switch("signin")

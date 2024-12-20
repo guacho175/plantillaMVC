@@ -19,10 +19,12 @@ class ObservableModel:
         return lambda: self._event_listeners[event].remove(fn)
 
 
-    def trigger_event(self, event):
+    def trigger_event(self, event, data=None):
         if event not in self._event_listeners.keys():
             return
 
         for func in self._event_listeners[event]:
-
-            func(self)
+            if data:
+                func(data)
+            else:
+                func(self)
